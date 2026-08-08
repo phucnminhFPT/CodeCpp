@@ -1,38 +1,8 @@
 #include <iostream>
 #include <vector>
+#include "Linked_List.h"
 
 using namespace std;
-
-class Node
-{
-public:
-	int data;
-	Node *next;
-
-	// Constructor Node
-	Node(int v)
-	{
-		data = v;
-		next = nullptr;
-	}
-
-	Node(int v, Node *newNode)
-	{
-		data = v;
-		next = newNode;
-	}
-};
-
-class Linked
-{
-private:
-	Node *head;
-
-public:
-	void traversing(Node *head);
-	int searchTarget(Node *head, int target);
-	void addFront(Node *newNode);
-};
 
 void Linked::traversing(Node *head)
 {
@@ -57,10 +27,10 @@ int Linked::searchTarget(Node *head, int target)
 	}
 	return -1;
 }
-void Linked::addFront(Node *newNode, Node *head)
+void Linked::addFront(Node *newNode, Node *&head)
 {
 	newNode->next = head;
-	newNode = head;
+	head = newNode;
 }
 
 void search(Node *head, int target)
@@ -100,6 +70,15 @@ int main()
 	}
 
 	Linked list;
+	list.traversing(head);
+
+	// Add element
+	int b;
+	cout << "\nAdd front new element : ";
+	cin >> b;
+
+	Node *newNode = new Node(b);
+	list.addFront(newNode, head);
 	list.traversing(head);
 
 	system("pause");
