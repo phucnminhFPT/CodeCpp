@@ -1,85 +1,93 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 #include "Linked_List.h"
-
+#include "Linked_List_Fn.h"
 using namespace std;
 
-void Linked::traversing(Node *head)
+int Menu()
 {
-	Node *temp = head;
-	while (temp != nullptr)
-	{
-		cout << temp->data << " ";
-		temp = temp->next;
-	}
+	int choice = -1;
+	cout << "--------- LINKED LIST MENU ------------------- \n";
+	cout << "1. Create new Linked_List \n";
+	cout << "2. Traversing array (show all element array) \n";
+	cout << "3. Add new element from FRONT \n";
+	cout << "4. Add new element from BACK \n";
+	cout << "5. Add new element with enter index\n";
+	cout << "6. Add element with random index \n";
+	cout << "7. At element with know index (Position) \n";
+	cout << "8. Delete front element\n";
+	cout << "9. Delete back element \n";
+	cout << "10. Delete random element\n";
+	cout << "11. Delete element with index\n";
+	cout << "12. Search element \n";
+	cout << "Choice your CHOICE -> ";
+	cin >> choice;
+	return choice;
 }
 
-int Linked::searchTarget(Node *head, int target)
-{
-	Node *temp = head;
-	int i = 0;
-	while (temp != nullptr)
-	{
-		if (temp->data == target)
-			return i;
-		temp = temp->next;
-		i++;
-	}
-	return -1;
-}
-void Linked::addFront(Node *newNode, Node *&head)
-{
-	newNode->next = head;
-	head = newNode;
-}
-
-void search(Node *head, int target)
-{
-	Linked list;
-	int result = list.searchTarget(head, target);
-
-	if (result != -1)
-		cout << "\nFound ! At " << result << endl;
-	else
-		cout << "\nNot found" << endl;
-}
 int main()
 {
-	int a, target;
-	cin >> a >> target;
-
-	// head va tail chua data va next
-	Node *head = nullptr;
 	Node *tail = nullptr;
+	Node *head = nullptr;
 
-	for (int i = 0; i < a; i++)
+	int choice = Menu();
+	while (choice >= 1 && choice <= 10)
 	{
-		int x;
-		cin >> x;
-		Node *newNode = new Node(x);
-		if (head == nullptr)
+		switch (choice)
 		{
-			head = newNode;
-			tail = newNode;
+		case 1: // 1. Create new Linked_List
+			createArrNode(tail, head);
+			traversingList(head);
+			break;
+		case 2: // 2. Traversing array (show all element array)
+			traversingList(head);
+			break;
+		case 3: // 3. Add new element from FRONT
+			addEleFront(head);
+			traversingList(head);
+			break;
+		case 4: // 4. Add new element from BACK
+			addEleBack(tail);
+			traversingList(head);
+			break;
+		case 5: // 5. Add new element with enter index
+			addEleWithIndex(head);
+			traversingList(head);
+			break;
+		case 6: // 6. Add element with random index
+			addRandomEle(head);
+			traversingList(head);
+			break;
+		case 7: // 7. At element with know index (Position)
+			addRandomEle(head);
+			traversingList(head);
+			break;
+		case 8: // 8. Delete front element
+			deleteEleFront(head);
+			traversingList(head);
+			break;
+		case 9: // 9. Delete back element
+			deleteEleBack(tail);
+			traversingList(head);
+			break;
+		case 10: // 10. Delete random element
+			deleteEleRandom(head, tail);
+			traversingList(head);
+			break;
+		case 11: // Delete element with index
+
+			break;
+		case 12: // 11. Search element
+			searchEle(head);
+			break;
+		default:
+			break;
 		}
-		else
-		{
-			tail->next = newNode;
-			tail = newNode;
-		}
+		cout << endl;
+		choice = Menu();
 	}
-
-	Linked list;
-	list.traversing(head);
-
-	// Add element
-	int b;
-	cout << "\nAdd front new element : ";
-	cin >> b;
-
-	Node *newNode = new Node(b);
-	list.addFront(newNode, head);
-	list.traversing(head);
 
 	system("pause");
 	return 0;
