@@ -7,47 +7,63 @@ class Solution
 public:
     char processStr(string s, long long k)
     {
-        // % : L khong doi
-        // * : Tru di 1 ki tu
-        // # : gap doi do dai
+        long long lenS = 0;
+        /*  If the letter is a lowercase English letter append it to result.
+            '*' ：removes the last character from result, if it exists.
+            '#' ：duplicates the current result and appends it to itself.
+            '%' ：reverses the current result.
+        */
 
-        long long Final_Len_S = 0;
-
-        // Duyet xuoi de lay chuoi Cur_Length truoc
+        // Forward traversing to find last length of lenS
         for (int i = 0; i < s.length(); i++)
         {
-            if (s[i] >= 'a' && s[i] <= 'z')
-                Final_Len_S++;
-            else if (s[i] == '*' && Final_Len_S > 0)
-                Final_Len_S--;
+            if (s[i] == '*')
+            {
+                if (lenS > 0)
+                    lenS--;
+            }
+
             else if (s[i] == '#')
-                Final_Len_S *= 2;
+                lenS *= 2;
+            else if (s[i] == '%')
+                continue;
+            else
+                lenS++;
         }
 
-        if (k + 1 > Final_Len_S)
+        if (k < 0 || k + 1 > lenS) // If K is index also lenS too
             return '.';
 
-        // Bắt đầu trừ
+        // Reverse traversing to decrease k belong to lenS == k or not
+
+        /*  If the letter is a lowercase English letter append it to result.
+            '*' ：removes the last character from result, if it exists.
+            '#' ：duplicates the current result and appends it to itself.
+            '%' ：reverses the current result.
+        */
         for (int i = s.length() - 1; i >= 0; i--)
         {
             if (s[i] == '*')
-                Final_Len_S++;
+            {
+                lenS++;
+            }
             else if (s[i] == '#')
             {
-                if (k + 1 > (Final_Len_S + 1) / 2) // Vì K ở nửa sau nên dùng công thức quy về nửa đầu
-                    k -= (Final_Len_S) / 2;
-
-                Final_Len_S = (Final_Len_S + 1) / 2;
+                long long half = (lenS + 1) / 2;
+                if (k + 1 > half / 2) // Nếu k nằm ở nửa sau thì đưa k về nửa đầu
+                    k -= lenS / 2;
+                lenS = half / 2;
             }
+
             else if (s[i] == '%')
             {
-                k = Final_Len_S - 1 - k; // Công thức khi gặp reverse
+                k = lenS - 1 - k;
             }
             else
             {
-                if (Final_Len_S == k + 1)
+                if (k == lenS - 1)
                     return s[i];
-                Final_Len_S--;
+                lenS--;
             }
         }
         return '.';
@@ -56,7 +72,13 @@ public:
 
 int main()
 {
+    Solution sol;
+    string s;
+    long long k = 0;
+    cin >> s >> k;
+    char re = sol.processStr(s, k);
 
+    cout << re;
     system("pause");
     return 0;
 }
