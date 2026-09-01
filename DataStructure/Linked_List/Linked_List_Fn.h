@@ -139,6 +139,18 @@ void deleteEleBack(Node *&tail) // 9.Delete back element
 }
 void deleteEleRandom(Node *&head, Node *&tail) // 10. Delete random element
 {
+    srand(time(0));
+
+    int valueRan = rand() % 100 + 1; // 1 -> 100
+    int indexRan = rand() % 5;       // 0 -> 4
+
+    Node * temp = head;
+    while ()
+    {
+        /* code */
+    }
+    
+    
 }
 
 void deleteEleIndex(Node *head)
