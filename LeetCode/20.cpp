@@ -19,7 +19,6 @@ public:
                 break;
             case '}':
                 if (stk.empty() == true || stk.top() != '{')
-                    return false;
                 stk.pop();
                 break;
             case ')':
